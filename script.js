@@ -28,8 +28,11 @@ function createPixel(grid) {
 createPixel(gridSize);
 gridSliderLabel.textContent = `${gridSize}x${gridSize}`;
 
-gridSlid.addEventListener("input", (e) => {
+gridSlid.addEventListener("change", (e) => {
   gridSize = +e.target.value;
   createPixel(gridSize);
+});
+gridSlid.addEventListener("input", (e) => {
+  gridSize = +e.target.value;
   gridSliderLabel.textContent = `${gridSize}x${gridSize}`;
 });
