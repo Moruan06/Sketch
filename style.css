@@ -1,3 +1,9 @@
+:root{
+    --corFundo: darkslategray;
+    --corTexto: #fff;
+    --corSecundaria: #3b3b3b
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
@@ -6,25 +12,124 @@ body {
   justify-content: center;
   height: 100vh;
   width: 100vw;
-  background-color: darkslategray;
+  background-color: var(--corFundo);
+  color: var(--corTexto);
 }
 
 #container {
   width: 500px;
   height: 500px;
   background-color: rgb(243, 243, 243);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: rgba(255, 255, 255, 0.24) 0px 3px 50px;
   display: flex;
   flex-wrap: wrap;
 }
 
 .pixel {
     box-sizing: border-box;
-    border: 1px solid black; /*tirar depois*/
 }
 
 #control{
-    background-color: blanchedalmond;
     text-align: center;
-    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: 500px;
+    position: absolute;
+    left: 20%;
+}
+
+#control button{
+    width: 150px;
+    height: 40px;
+    border: 1px solid var(--corTexto);
+    color: var(--corTexto);
+    border-radius: 10px;
+    background-color: var(--corFundo);
+}
+
+button,
+input[type='color'] {
+  transition: transform 0.1s ease-in-out;
+}
+
+button:hover,
+input[type='color']:hover {
+  transform: scale(1.05);
+}
+
+input[type='color']:active {
+  transition: transform 0.05s ease-in-out;
+  transform: scale(1);
+}
+
+input[type='color'] {
+  appearance: none;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+}
+
+input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type='color']::-webkit-color-swatch {
+  border: 1px solid  var(--corTexto);
+  border-radius: 50px;
+  box-shadow: rgba(255, 255, 255, 0.24) 0px 0px 8px;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 90%;
+    height: 8px;
+    background: var(--corSecundaria);
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: var(--corSecundaria);
+    border-radius: 5px;
+}
+
+input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: var(--corSecundaria);
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--corTexto);
+    cursor: pointer;
+    border-radius: 50%;
+    margin-top: -6px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--corTexto);
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+
+input[type="range"]:hover {
+    opacity: 1;
 }
