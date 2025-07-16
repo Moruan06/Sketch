@@ -1,15 +1,35 @@
 const canvas = document.querySelector("#container");
-function createPixel(grid){
-    canvas.innerHTML = '';
-    for(let i = 0; i < grid * grid; i++){
-        const colorDiv = document.createElement("div");
-        colorDiv.style.cssText = `flex-basis: ${100 / grid}%;
-        height: ${100 / grid}%;`;
-        colorDiv.classList.add("pixel");
-        canvas.appendChild(colorDiv);
-    };
-};
-
 const gridSlid = document.querySelector("#gridSizeSlider");
+const gridSliderLabel = document.querySelector("#gridSliderLabel");
+let gridSize = +gridSlid.value;
+const colorPicker = document.querySelector("#pencilColor");
+let isDrawing = false;
 
-gridSlid.addEventListener('change', (e) => createPixel(+e.target.value));
+function createPixel(grid) {
+  canvas.innerHTML = "";
+  for (let i = 0; i < grid * grid; i++) {
+    const pixel = document.createElement("div");
+    pixel.style.cssText = `flex-basis: ${100 / grid}%;
+        height: ${100 / grid}%;`;
+    pixel.classList.add("pixel");
+
+    pixel.addEventListener("mousedown", (e) => {
+      isDrawing = true;
+      pixel.style.backgroundColor = `${colorPicker.value}`;
+    });
+    pixel.addEventListener("mouseover", (e) => {
+      if (isDrawing) pixel.style.backgroundColor = `${colorPicker.value}`;
+    });
+    document.body.addEventListener("mouseup", (e) => (isDrawing = false));
+    canvas.appendChild(pixel);
+  }
+}
+
+createPixel(gridSize);
+gridSliderLabel.textContent = `${gridSize}x${gridSize}`;
+
+gridSlid.addEventListener("input", (e) => {
+  gridSize = +e.target.value;
+  createPixel(gridSize);
+  gridSliderLabel.textContent = `${gridSize}x${gridSize}`;
+});
