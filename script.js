@@ -14,6 +14,7 @@ const clear = document.querySelector("#clear");
 let activeToolButton = null;
 
 clear.addEventListener("click", () => createPixel(gridSize));
+
 borracha.addEventListener("click", () => {
   if (currentTool === "borracha") {
     currentTool = "lapis";
@@ -23,6 +24,7 @@ borracha.addEventListener("click", () => {
     setActiveButton(borracha);
   }
 });
+
 rainbow.addEventListener("click", () => {
   if (currentTool === "rainbow") {
     currentTool = "lapis";
@@ -32,6 +34,7 @@ rainbow.addEventListener("click", () => {
     setActiveButton(rainbow);
   }
 });
+
 escurecer.addEventListener("click", () => {
   if (currentTool === "escurecer") {
     currentTool = "lapis";
@@ -41,6 +44,7 @@ escurecer.addEventListener("click", () => {
     setActiveButton(escurecer);
   }
 });
+
 clarear.addEventListener("click", () => {
   if (currentTool === "clarear") {
     currentTool = "lapis";
@@ -50,6 +54,7 @@ clarear.addEventListener("click", () => {
     setActiveButton(clarear);
   }
 });
+
 let currentTool = "lapis";
 
 function setActiveButton(button) {
@@ -102,4 +107,10 @@ gridSlid.addEventListener("change", (e) => {
 gridSlid.addEventListener("input", (e) => {
   gridSize = +e.target.value;
   gridSliderLabel.textContent = `${gridSize}x${gridSize}`;
+});
+
+//Previne bug no mouse ao 'carregar'
+document.body.addEventListener('dragstart', (e) => {
+    e.preventDefault();
+    return false;
 });
