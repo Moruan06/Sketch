@@ -19,7 +19,7 @@ body {
 #container {
   width: 500px;
   height: 500px;
-  background-color: rgb(243, 243, 243);
+  background-color: var(--corTexto);
   box-shadow: rgba(255, 255, 255, 0.24) 0px 3px 50px;
   display: flex;
   flex-wrap: wrap;
@@ -47,6 +47,12 @@ body {
     color: var(--corTexto);
     border-radius: 10px;
     background-color: var(--corFundo);
+}
+
+#control button.activeButton{
+    background-color: var(--corTexto);
+    color: var(--corFundo);
+    transform: scale(1.05);
 }
 
 button,

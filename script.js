@@ -5,6 +5,73 @@ let gridSize = +gridSlid.value;
 const colorPicker = document.querySelector("#pencilColor");
 let isDrawing = false;
 
+//botões de ferramenta:
+const borracha = document.querySelector("#erase");
+const rainbow = document.querySelector("#rainbow");
+const escurecer = document.querySelector("#darken");
+const clarear = document.querySelector("#lighten");
+const clear = document.querySelector("#clear");
+let activeToolButton = null;
+
+clear.addEventListener("click", () => createPixel(gridSize));
+borracha.addEventListener("click", () => {
+  if (currentTool === "borracha") {
+    currentTool = "lapis";
+    activeToolButton.classList.remove("activeButton");
+  } else {
+    currentTool = "borracha";
+    setActiveButton(borracha);
+  }
+});
+rainbow.addEventListener("click", () => {
+  if (currentTool === "rainbow") {
+    currentTool = "lapis";
+    activeToolButton.classList.remove("activeButton");
+  } else {
+    currentTool = "rainbow";
+    setActiveButton(rainbow);
+  }
+});
+escurecer.addEventListener("click", () => {
+  if (currentTool === "escurecer") {
+    currentTool = "lapis";
+    activeToolButton.classList.remove("activeButton");
+  } else {
+    currentTool = "escurecer";
+    setActiveButton(escurecer);
+  }
+});
+clarear.addEventListener("click", () => {
+  if (currentTool === "clarear") {
+    currentTool = "lapis";
+    activeToolButton.classList.remove("activeButton");
+  } else {
+    currentTool = "clarear";
+    setActiveButton(clarear);
+  }
+});
+let currentTool = "lapis";
+
+function setActiveButton(button) {
+  if (activeToolButton) {
+    activeToolButton.classList.remove("activeButton");
+  }
+  activeToolButton = button;
+  if (activeToolButton) {
+    activeToolButton.classList.add("activeButton");
+  }
+}
+
+function tools(pixelElement) {
+  switch (currentTool) {
+    case "borracha":
+      pixelElement.style.backgroundColor = "white";
+      break;
+    case "lapis":
+      pixelElement.style.backgroundColor = `${colorPicker.value}`;
+  }
+}
+
 function createPixel(grid) {
   canvas.innerHTML = "";
   for (let i = 0; i < grid * grid; i++) {
@@ -15,10 +82,10 @@ function createPixel(grid) {
 
     pixel.addEventListener("mousedown", (e) => {
       isDrawing = true;
-      pixel.style.backgroundColor = `${colorPicker.value}`;
+      tools(pixel);
     });
     pixel.addEventListener("mouseover", (e) => {
-      if (isDrawing) pixel.style.backgroundColor = `${colorPicker.value}`;
+      if (isDrawing) tools(pixel);
     });
     document.body.addEventListener("mouseup", (e) => (isDrawing = false));
     canvas.appendChild(pixel);
