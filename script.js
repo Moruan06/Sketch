@@ -11,6 +11,7 @@ const rainbow = document.querySelector("#rainbow");
 const escurecer = document.querySelector("#darken");
 const clarear = document.querySelector("#lighten");
 const clear = document.querySelector("#clear");
+const bordas = document.querySelector("#border");
 let activeToolButton = null;
 
 clear.addEventListener("click", () => createPixel(gridSize));
@@ -45,7 +46,6 @@ escurecer.addEventListener("click", () => {
   }
 });
 
-
 clarear.addEventListener("click", () => {
   if (currentTool === "clarear") {
     currentTool = "lapis";
@@ -53,6 +53,16 @@ clarear.addEventListener("click", () => {
   } else {
     currentTool = "clarear";
     setActiveButton(clarear);
+  }
+});
+
+bordas.addEventListener("click", () => {
+  if (currentTool === "bordas") {
+    currentTool = "lapis";
+    activeToolButton.classList.remove("activeButton");
+  } else {
+    currentTool = "bordas";
+    setActiveButton(bordas);
   }
 });
 
