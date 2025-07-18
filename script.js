@@ -45,6 +45,7 @@ escurecer.addEventListener("click", () => {
   }
 });
 
+
 clarear.addEventListener("click", () => {
   if (currentTool === "clarear") {
     currentTool = "lapis";
@@ -56,6 +57,13 @@ clarear.addEventListener("click", () => {
 });
 
 let currentTool = "lapis";
+
+function getRandomColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r}, ${g}, ${b})`;
+}
 
 function setActiveButton(button) {
   if (activeToolButton) {
@@ -71,9 +79,31 @@ function tools(pixelElement) {
   switch (currentTool) {
     case "borracha":
       pixelElement.style.backgroundColor = "white";
+      pixelElement.style.backgroundImage = 'none';
       break;
-    case "lapis":
-      pixelElement.style.backgroundColor = `${colorPicker.value}`;
+    case "rainbow":
+      pixelElement.style.backgroundColor = getRandomColor();
+      pixelElement.style.opacity = 1;
+      pixelElement.dataset.darknessLevel = 0.0;
+      pixelElement.style.backgroundImage = 'none';
+      break;
+    case "escurecer":
+      let currentDarkness = parseFloat(pixelElement.dataset.darknessLevel);
+      const newDarkness = Math.min(1.0, currentDarkness + 0.1);
+      pixelElement.dataset.darknessLevel = newDarkness.toFixed(2);
+      const darkenColor = `rgba(0, 0, 0, ${newDarkness.toFixed(2)})`;
+      pixelElement.style.backgroundImage = `linear-gradient(${darkenColor}, ${darkenColor})`;
+      break;
+    case "clarear":
+      let currentOpacity = parseFloat(pixelElement.style.opacity);
+      let newOpacity = Math.max(0.0, currentOpacity - 0.1);
+      pixelElement.style.opacity = newOpacity;
+      break;
+    default:
+      pixelElement.style.backgroundColor = colorPicker.value;
+      pixelElement.style.opacity = 1;
+      pixelElement.dataset.darknessLevel = 0.0;
+      pixelElement.style.backgroundImage = 'none';
   }
 }
 
@@ -81,6 +111,7 @@ function createPixel(grid) {
   canvas.innerHTML = "";
   for (let i = 0; i < grid * grid; i++) {
     const pixel = document.createElement("div");
+    pixel.dataset.darknessLevel = "0.0";
     pixel.style.cssText = `flex-basis: ${100 / grid}%;
         height: ${100 / grid}%;`;
     pixel.classList.add("pixel");
@@ -110,7 +141,7 @@ gridSlid.addEventListener("input", (e) => {
 });
 
 //Previne bug no mouse ao 'carregar'
-document.body.addEventListener('dragstart', (e) => {
-    e.preventDefault();
-    return false;
+document.body.addEventListener("dragstart", (e) => {
+  e.preventDefault();
+  return false;
 });
