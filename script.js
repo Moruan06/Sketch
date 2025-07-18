@@ -4,6 +4,7 @@ const gridSliderLabel = document.querySelector("#gridSliderLabel");
 let gridSize = +gridSlid.value;
 const colorPicker = document.querySelector("#pencilColor");
 let isDrawing = false;
+let borderOn = false;
 
 //botões de ferramenta:
 const borracha = document.querySelector("#erase");
@@ -57,13 +58,8 @@ clarear.addEventListener("click", () => {
 });
 
 bordas.addEventListener("click", () => {
-  if (currentTool === "bordas") {
-    currentTool = "lapis";
-    activeToolButton.classList.remove("activeButton");
-  } else {
-    currentTool = "bordas";
-    setActiveButton(bordas);
-  }
+  borderOn = !borderOn;
+  bordas.classList.toggle("activeButton");
 });
 
 let currentTool = "lapis";
@@ -83,6 +79,10 @@ function setActiveButton(button) {
   if (activeToolButton) {
     activeToolButton.classList.add("activeButton");
   }
+}
+
+function togglePixelBorder(){
+  
 }
 
 function tools(pixelElement) {
