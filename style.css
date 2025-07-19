@@ -1,6 +1,6 @@
 :root {
   --corFundo: darkslategray;
-  --corTexto: #fff;
+  --corTexto: rgb(171, 116, 13);
   --corSecundaria: #3b3b3b;
 }
 
@@ -8,8 +8,9 @@ body {
   margin: 0;
   box-sizing: border-box;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100vw;
   background-color: var(--corFundo);
@@ -19,10 +20,25 @@ body {
 #container {
   width: 500px;
   height: 500px;
-  background-color: var(--corTexto);
+  background-color: #fff;
   box-shadow: rgba(255, 255, 255, 0.24) 0px 3px 50px;
   display: flex;
   flex-wrap: wrap;
+}
+
+.titulo{
+  font-size: 2rem;
+  color: var(--corTexto);
+}
+
+.github{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 1.5rem;
+  & a{
+    color: var(--corTexto);
+  }
 }
 
 .pixel {
@@ -43,7 +59,7 @@ body {
 
 #control button {
   width: 150px;
-  height: 35px;
+  height: 40px;
   border: 1px solid var(--corTexto);
   color: var(--corTexto);
   border-radius: 10px;
@@ -87,7 +103,7 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
   border: 1px solid var(--corTexto);
   border-radius: 50px;
-  box-shadow: rgba(255, 255, 255, 0.24) 0px 0px 8px;
+  box-shadow: var(--corTexto) 0px 0px 8px;
 }
 
 input[type="range"] {
