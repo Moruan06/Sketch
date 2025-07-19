@@ -60,6 +60,7 @@ clarear.addEventListener("click", () => {
 bordas.addEventListener("click", () => {
   borderOn = !borderOn;
   bordas.classList.toggle("activeButton");
+  togglePixelBorder(borderOn);
 });
 
 let currentTool = "lapis";
@@ -81,39 +82,61 @@ function setActiveButton(button) {
   }
 }
 
-function togglePixelBorder(){
+function togglePixelBorder(turnOn) {
+  pixelList = document.querySelectorAll(".pixel");
+  pixelList.forEach((element) => {
+    if (turnOn) {
+      element.style.outline = "1px solid #3b3b3b";
+      element.style.outlineOffset = "-1px";
+    } else element.style.outline = "none";
+  });
+}
+
+function brightLevelController(pixelElement, step) {
+  let currentLevel = parseFloat(pixelElement.dataset.brightLevel);
+  const newLevel = Math.min(1.0, Math.max(0.0, currentLevel + step));
+
+  if (newLevel === currentLevel && (newLevel === 0.0 || newLevel === 1.0)) return;
+
+  pixelElement.dataset.brightLevel = newLevel.toFixed(2);
+  let overlayColor;
   
+  if(newLevel === 0.5) {
+    pixelElement.style.backgroundImage = 'none';
+    return;
+  }
+  else if(newLevel < 0.5){
+    const alpha = (0.5 - newLevel) / 0.5;
+    overlayColor = `rgba(0, 0, 0, ${alpha.toFixed(2)})`
+  }else{
+    const alpha = (newLevel - 0.5) / 0.5;
+    overlayColor = `rgba(255, 255, 255, ${alpha.toFixed(2)})`
+  }
+  
+  pixelElement.style.backgroundImage = `linear-gradient(${overlayColor}, ${overlayColor})`;
 }
 
 function tools(pixelElement) {
   switch (currentTool) {
     case "borracha":
       pixelElement.style.backgroundColor = "white";
-      pixelElement.style.backgroundImage = 'none';
+      pixelElement.style.backgroundImage = "none";
       break;
     case "rainbow":
       pixelElement.style.backgroundColor = getRandomColor();
-      pixelElement.style.opacity = 1;
-      pixelElement.dataset.darknessLevel = 0.0;
-      pixelElement.style.backgroundImage = 'none';
+      pixelElement.style.backgroundImage = "none";
+      pixelElement.dataset.brightLevel = 0.5;
       break;
     case "escurecer":
-      let currentDarkness = parseFloat(pixelElement.dataset.darknessLevel);
-      const newDarkness = Math.min(1.0, currentDarkness + 0.1);
-      pixelElement.dataset.darknessLevel = newDarkness.toFixed(2);
-      const darkenColor = `rgba(0, 0, 0, ${newDarkness.toFixed(2)})`;
-      pixelElement.style.backgroundImage = `linear-gradient(${darkenColor}, ${darkenColor})`;
+      brightLevelController(pixelElement, -0.1);
       break;
     case "clarear":
-      let currentOpacity = parseFloat(pixelElement.style.opacity);
-      let newOpacity = Math.max(0.0, currentOpacity - 0.1);
-      pixelElement.style.opacity = newOpacity;
+      brightLevelController(pixelElement, 0.1);
       break;
     default:
       pixelElement.style.backgroundColor = colorPicker.value;
-      pixelElement.style.opacity = 1;
-      pixelElement.dataset.darknessLevel = 0.0;
-      pixelElement.style.backgroundImage = 'none';
+      pixelElement.style.backgroundImage = "none";
+      pixelElement.dataset.brightLevel = 0.5;
   }
 }
 
@@ -121,11 +144,11 @@ function createPixel(grid) {
   canvas.innerHTML = "";
   for (let i = 0; i < grid * grid; i++) {
     const pixel = document.createElement("div");
-    pixel.dataset.darknessLevel = "0.0";
+    pixel.dataset.brightLevel = "0.5";
     pixel.style.cssText = `flex-basis: ${100 / grid}%;
         height: ${100 / grid}%;`;
     pixel.classList.add("pixel");
-
+    togglePixelBorder(borderOn);
     pixel.addEventListener("mousedown", (e) => {
       isDrawing = true;
       tools(pixel);
