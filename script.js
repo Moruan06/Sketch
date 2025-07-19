@@ -86,7 +86,7 @@ function togglePixelBorder(turnOn) {
   pixelList = document.querySelectorAll(".pixel");
   pixelList.forEach((element) => {
     if (turnOn) {
-      element.style.outline = "1px solid #3b3b3b";
+      element.style.outline = "1px solid #ccc";
       element.style.outlineOffset = "-1px";
     } else element.style.outline = "none";
   });
@@ -96,23 +96,23 @@ function brightLevelController(pixelElement, step) {
   let currentLevel = parseFloat(pixelElement.dataset.brightLevel);
   const newLevel = Math.min(1.0, Math.max(0.0, currentLevel + step));
 
-  if (newLevel === currentLevel && (newLevel === 0.0 || newLevel === 1.0)) return;
+  if (newLevel === currentLevel && (newLevel === 0.0 || newLevel === 1.0))
+    return;
 
   pixelElement.dataset.brightLevel = newLevel.toFixed(2);
   let overlayColor;
-  
-  if(newLevel === 0.5) {
-    pixelElement.style.backgroundImage = 'none';
+
+  if (newLevel === 0.5) {
+    pixelElement.style.backgroundImage = "none";
     return;
-  }
-  else if(newLevel < 0.5){
+  } else if (newLevel < 0.5) {
     const alpha = (0.5 - newLevel) / 0.5;
-    overlayColor = `rgba(0, 0, 0, ${alpha.toFixed(2)})`
-  }else{
+    overlayColor = `rgba(0, 0, 0, ${alpha.toFixed(2)})`;
+  } else {
     const alpha = (newLevel - 0.5) / 0.5;
-    overlayColor = `rgba(255, 255, 255, ${alpha.toFixed(2)})`
+    overlayColor = `rgba(255, 255, 255, ${alpha.toFixed(2)})`;
   }
-  
+
   pixelElement.style.backgroundImage = `linear-gradient(${overlayColor}, ${overlayColor})`;
 }
 
@@ -145,10 +145,17 @@ function createPixel(grid) {
   for (let i = 0; i < grid * grid; i++) {
     const pixel = document.createElement("div");
     pixel.dataset.brightLevel = "0.5";
-    pixel.style.cssText = `flex-basis: ${100 / grid}%;
-        height: ${100 / grid}%;`;
+    pixel.style.cssText = `
+      flex-basis: ${canvas.clientWidth / grid}px;
+      height: ${canvas.clientHeight / grid}px;`;
+      
     pixel.classList.add("pixel");
-    togglePixelBorder(borderOn);
+    if (borderOn) {
+             pixel.style.outline = "1px solid #ccc";
+             pixel.style.outlineOffset = "-1px";
+        } else {
+             pixel.style.outline = "none";
+        }
     pixel.addEventListener("mousedown", (e) => {
       isDrawing = true;
       tools(pixel);
