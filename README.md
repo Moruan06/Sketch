@@ -2,7 +2,7 @@
 
 Um divertido e interativo Sketch Pad feito com HTML, CSS e JavaScript puro para você soltar a criatividade e praticar suas habilidades de front-end!
 
----
+[Veja funcionado aqui!](https://moruan06.github.io/Sketch/)
 
 ## ✨ Funcionalidades
 
@@ -23,7 +23,7 @@ Um divertido e interativo Sketch Pad feito com HTML, CSS e JavaScript puro para 
 
 1.  **Clone o Repositório:**
     ```bash
-    git clone [https://github.com/Moruan06/Sketch](https://github.com/Moruan06/Sketch)
+    git clone https://github.com/Moruan06/Sketch
     ```
 2.  **Navegue até a Pasta:**
     ```bash
