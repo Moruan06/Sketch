@@ -142,20 +142,22 @@ function tools(pixelElement) {
 
 function createPixel(grid) {
   canvas.innerHTML = "";
+  canvas.style.display = 'grid';
+  canvas.style.gridTemplateColumns = `repeat(${grid}, 1fr)`;
+  canvas.style.gridTemplateRows = `repeat(${grid}, 1fr)`;
+
   for (let i = 0; i < grid * grid; i++) {
     const pixel = document.createElement("div");
     pixel.dataset.brightLevel = "0.5";
-    pixel.style.cssText = `
-      flex-basis: ${canvas.clientWidth / grid}px;
-      height: ${canvas.clientHeight / grid}px;`;
-      
     pixel.classList.add("pixel");
+
     if (borderOn) {
-             pixel.style.outline = "1px solid #ccc";
-             pixel.style.outlineOffset = "-1px";
-        } else {
-             pixel.style.outline = "none";
-        }
+      pixel.style.outline = "1px solid #ccc";
+      pixel.style.outlineOffset = "-1px";
+    } else {
+      pixel.style.outline = "none";
+    }
+
     pixel.addEventListener("mousedown", (e) => {
       isDrawing = true;
       tools(pixel);
@@ -184,4 +186,13 @@ gridSlid.addEventListener("input", (e) => {
 document.body.addEventListener("dragstart", (e) => {
   e.preventDefault();
   return false;
+});
+
+let resizeTimeout;
+
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    createPixel(gridSize); 
+  }, 150); 
 });
