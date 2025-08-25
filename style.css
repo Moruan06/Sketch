@@ -98,6 +98,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 input[type="range"] {
+  appearance: none;
   -webkit-appearance: none;
   width: 90%;
   height: 8px;
