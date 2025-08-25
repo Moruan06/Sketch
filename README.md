@@ -13,7 +13,6 @@ Um divertido e interativo Sketch Pad feito com HTML, CSS e JavaScript puro para 
 * **Tamanho do Grid Customizável:** Altere a densidade do grid (de 1x1 até 32x32 pixels) usando um slider intuitivo.
 * **Ligar/Desligar Bordas:** Veja seus pixels com ou sem bordas para diferentes estilos de desenho.
 * **Limpar Tela:** Comece do zero a qualquer momento com um clique.
-* **Feito com Flexbox:** Uma implementação que explora bastante o flexbox para a organização dos pixels.
 
 ---
 
